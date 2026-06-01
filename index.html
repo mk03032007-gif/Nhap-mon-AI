@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <title>WebAR GPS - Tòa B4 ĐH Đồng Tháp</title>
+    <title>WebAR Marker - Quét mã Hiro con ngựa</title>
 
     <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
   </head>
 
   <body style="margin: 0; overflow: hidden;">
@@ -14,52 +14,22 @@
     <a-scene
       embedded
       vr-mode-ui="enabled: false"
-      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
+      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;">
 
       <a-assets>
         <a-asset-item id="horse-obj" src="./assets/10026_Horse_v01-it2.obj"></a-asset-item>
         <a-asset-item id="horse-mtl" src="./assets/10026_Horse_v01-it2.mtl"></a-asset-item>
       </a-assets>
 
-      <a-entity
-        obj-model="obj: #horse-obj; mtl: #horse-mtl"
-        gps-entity-place="latitude: 10.457813; longitude: 105.642103;" 
-        scale="0.05 0.05 0.05"
-        rotation="0 0 0">
-      </a-entity>
+      <a-entity light="type: ambient; intensity: 1.2;"></a-entity>
+      <a-entity light="type: directional; intensity: 0.8; castShadow: true" position="1 4 3"></a-entity>
 
-      <a-camera
-        gps-camera="gpsMinDistance: 1; maxDistance: 500; alert: true;"
-        rotation-reader>
-      </a-camera>
+      <a-marker preset="hiro">
+        
+        <a-entity
+          obj-model="obj: #horse-obj; mtl: #horse-mtl"
+          position="0 0 0"
+          scale="0.005 0.005 0.005"
+          rotation="-90 0 0"> </a-entity>
 
-    </a-scene>
-
-    <script>
-      window.addEventListener('load', () => {
-        if (navigator.geolocation) {
-          navigator.geolocation.watchPosition(
-            (position) => {
-              console.log(
-                "Tọa độ hiện tại của bạn -> Lat:", position.coords.latitude,
-                "| Lng:", position.coords.longitude,
-                "| Độ chính xác:", position.coords.accuracy + "m"
-              );
-            },
-            (err) => {
-              console.error("Lỗi GPS:", err);
-            },
-            {
-              enableHighAccuracy: true,
-              maximumAge: 0,
-              timeout: 10000
-            }
-          );
-        } else {
-          alert("Trình duyệt không hỗ trợ định vị GPS.");
-        }
-      });
-    </script>
-
-  </body>
-</html>
+      </a-marker>
