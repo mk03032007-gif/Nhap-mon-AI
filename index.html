@@ -11,37 +11,23 @@
 
   <body style="margin: 0; overflow: hidden;">
 
-  <a-scene
-  embedded
-  vr-mode-ui="enabled: false"
-  arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
-
-  <a-box
-    position="0 0 -5"
-    color="red"
-    scale="2 2 2">
-  </a-box>
-
-  <a-camera
-    gps-camera="gpsMinDistance: 1; maxDistance: 500; alert: true;"
-    rotation-reader>
-  </a-camera>
-
-</a-scene>
+    <a-scene
+      embedded
+      vr-mode-ui="enabled: false"
+      arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;">
 
       <a-assets>
-        <a-asset-item id="bird-obj" src="./assets/10012_crab_v2_iterations-1.obj"></a-asset-item>
-        <a-asset-item id="bird-mtl" src="./assets/10012_crab_v2_iterations-1.mtl"></a-asset-item>
+        <a-asset-item id="horse-obj" src="./assets/10026_Horse_v01-it2.obj"></a-asset-item>
+        <a-asset-item id="horse-mtl" src="./assets/10026_Horse_v01-it2.mtl"></a-asset-item>
       </a-assets>
 
-      <!-- Mô hình tại vị trí mới -->
-<a-box
-  position="0 0 -5"
-  color="red"
-  scale="2 2 2">
-</a-box>
+      <a-entity
+        obj-model="obj: #horse-obj; mtl: #horse-mtl"
+        gps-entity-place="latitude: 10.457813; longitude: 105.642103;" 
+        scale="0.05 0.05 0.05"
+        rotation="0 0 0">
+      </a-entity>
 
-      <!-- Tăng khoảng cách nhận diện -->
       <a-camera
         gps-camera="gpsMinDistance: 1; maxDistance: 500; alert: true;"
         rotation-reader>
@@ -55,13 +41,13 @@
           navigator.geolocation.watchPosition(
             (position) => {
               console.log(
-                "Lat:", position.coords.latitude,
-                "Lng:", position.coords.longitude,
-                "Accuracy:", position.coords.accuracy + "m"
+                "Tọa độ hiện tại của bạn -> Lat:", position.coords.latitude,
+                "| Lng:", position.coords.longitude,
+                "| Độ chính xác:", position.coords.accuracy + "m"
               );
             },
             (err) => {
-              console.error(err);
+              console.error("Lỗi GPS:", err);
             },
             {
               enableHighAccuracy: true,
@@ -69,6 +55,8 @@
               timeout: 10000
             }
           );
+        } else {
+          alert("Trình duyệt không hỗ trợ định vị GPS.");
         }
       });
     </script>
